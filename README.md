@@ -59,8 +59,8 @@ issue / PR opened
 
 ## 🚀 Usage
 
-1. Create an API key with a supported provider (or a [YangYang](https://yyng.icu) API token).
-2. Store it as a repository secret (e.g. `YANG_API_TOKEN` or `OPENAI_API_KEY`).
+1. Create an API key with a supported provider (or a [YangYang](https://yyng.icu) Studio API key `sk-yyng…`).
+2. Store it as a repository secret (e.g. `YANG_API_KEY` or `OPENAI_API_KEY`).
 3. Add the workflow below.
 4. Open a test issue — YGA comments as `github-actions[bot]`.
 
@@ -79,7 +79,7 @@ Provider base URLs are hardcoded in the action:
 
 ## 🔐 Required secrets
 
-- `API_KEY` — key for the selected provider (YangYang token when using `yangyang`)
+- `API_KEY` — key for the selected provider (Studio `sk-yyng…` when using `yangyang`)
 - `GITHUB_TOKEN` — GitHub token used to read the event and post comments (usually `${{ github.token }}`)
 
 ## ⚙️ Inputs
@@ -117,15 +117,16 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: yang-git-assistant
-        uses: YangYang-Research/yang-git-assistant@v0.4.0
+        uses: YangYang-Research/yang-git-assistant@v0.4.1
         with:
           PROVIDER: yangyang
-          API_KEY: ${{ secrets.YANG_API_TOKEN }}
+          API_KEY: ${{ secrets.YANG_API_KEY }}
           MODEL_NAME: auto
           GITHUB_TOKEN: ${{ github.token }}
 ```
 
-YangYang uses Studio Token-Base64 against AI Gateway (`ai.yyng.icu`).
+YangYang uses Studio personal API key (`sk-yyng…`) against AI Gateway (`ai.yyng.icu`):
+`Authorization: Bearer` and/or `x-yang-api-key`.
 
 OpenAI example:
 
